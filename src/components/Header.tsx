@@ -3,10 +3,9 @@ import { Menu, X, Leaf } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
-  onNavigate: (section: string) => void;
 }
 
-export function Header({ activeSection, onNavigate }: HeaderProps) {
+export function Header({ activeSection }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -16,30 +15,43 @@ export function Header({ activeSection, onNavigate }: HeaderProps) {
     { id: 'contact', label: 'Contact' },
   ];
 
-  function handleNav(section: string) {
-    onNavigate(section);
+  function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+    e.preventDefault();
     setMobileMenuOpen(false);
+    if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   }
 
   return (
     <header className="header">
       <div className="container">
         <div className="header-content">
-          <button onClick={() => handleNav('home')} className="logo flex items-center gap-2 min-w-0">
+          <a
+            href="#home"
+            onClick={(e) => scrollToSection(e, 'home')}
+            className="logo flex items-center gap-2 min-w-0"
+          >
             <Leaf size={24} className="text-green-500 shrink-0" strokeWidth={2.5} />
             <span className="text-sm md:text-lg font-bold tracking-tight text-green-400 whitespace-nowrap">
               EcoV <span className="font-medium text-slate-400">Materials Inc.</span>
             </span>
-          </button>
+          </a>
           <nav className="nav-desktop">
             {navItems.map((item) => (
-              <button
+              <a
                 key={item.id}
-                onClick={() => handleNav(item.id)}
+                href={`#${item.id}`}
+                onClick={(e) => scrollToSection(e, item.id)}
                 className={`nav-link ${activeSection === item.id ? 'nav-link-active' : ''}`}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
           <button
@@ -54,13 +66,14 @@ export function Header({ activeSection, onNavigate }: HeaderProps) {
       {mobileMenuOpen && (
         <div className="mobile-menu">
           {navItems.map((item) => (
-            <button
+            <a
               key={item.id}
-              onClick={() => handleNav(item.id)}
+              href={`#${item.id}`}
+              onClick={(e) => scrollToSection(e, item.id)}
               className={`mobile-nav-link ${activeSection === item.id ? 'nav-link-active' : ''}`}
             >
               {item.label}
-            </button>
+            </a>
           ))}
         </div>
       )}

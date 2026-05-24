@@ -10,17 +10,6 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    if (activeSection !== 'home') {
-      const el = document.getElementById(activeSection);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [activeSection]);
-
-  useEffect(() => {
     function handleScroll() {
       const sections = ['contact', 'what-we-do', 'about'];
       for (const id of sections) {
@@ -42,14 +31,14 @@ function App() {
 
   return (
     <div className="overflow-x-hidden w-full max-w-full">
-      <Header activeSection={activeSection} onNavigate={setActiveSection} />
+      <Header activeSection={activeSection} />
       <main>
-        <Home onNavigate={setActiveSection} />
+        <Home />
         <About />
         <WhatWeDo />
         <Contact />
       </main>
-      <Footer onNavigate={setActiveSection} />
+      <Footer />
     </div>
   );
 }

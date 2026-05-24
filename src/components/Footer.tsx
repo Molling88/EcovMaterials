@@ -1,10 +1,18 @@
 import { Leaf } from 'lucide-react';
 
-interface FooterProps {
-  onNavigate: (section: string) => void;
-}
+export function Footer() {
+  function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+    e.preventDefault();
+    if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
 
-export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer>
       <div className="container">
@@ -23,10 +31,10 @@ export function Footer({ onNavigate }: FooterProps) {
           <div className="footer-links">
             <h4>Navigation</h4>
             <ul>
-              <li><button onClick={() => onNavigate('home')}>Home</button></li>
-              <li><button onClick={() => onNavigate('about')}>About</button></li>
-              <li><button onClick={() => onNavigate('what-we-do')}>What We Do</button></li>
-              <li><button onClick={() => onNavigate('contact')}>Contact</button></li>
+              <li><a href="#home" onClick={(e) => scrollToSection(e, 'home')}>Home</a></li>
+              <li><a href="#about" onClick={(e) => scrollToSection(e, 'about')}>About</a></li>
+              <li><a href="#what-we-do" onClick={(e) => scrollToSection(e, 'what-we-do')}>What We Do</a></li>
+              <li><a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a></li>
             </ul>
           </div>
           <div className="footer-links">

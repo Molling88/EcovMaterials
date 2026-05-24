@@ -1,10 +1,14 @@
 import { ArrowRight, RefreshCw, Shield, TrendingUp } from 'lucide-react';
 
-interface HomeProps {
-  onNavigate: (section: string) => void;
-}
+export function Home() {
+  function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
-export function Home({ onNavigate }: HomeProps) {
   return (
     <section className="hero">
       <div className="container">
@@ -17,13 +21,13 @@ export function Home({ onNavigate }: HomeProps) {
             and social value at scale.
           </p>
           <div className="cta-group">
-            <button className="btn-primary" onClick={() => onNavigate('contact')}>
+            <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="btn-primary">
               Get in Touch
               <ArrowRight size={18} className="inline ml-2" />
-            </button>
-            <button className="btn-secondary" onClick={() => onNavigate('what-we-do')}>
+            </a>
+            <a href="#what-we-do" onClick={(e) => scrollToSection(e, 'what-we-do')} className="btn-secondary">
               Learn More
-            </button>
+            </a>
           </div>
           <div className="stats">
             <div className="stat">
